@@ -321,7 +321,7 @@ export function resolveConstructorOptions(Ctor: typeof Component) {
 }
 ```
 
-函数 `resolveConstructorOptions` 的开头就让人游戏迷惑了吧，传入的参数是 `vm.constructor` 由 [[面向对象]] 这章我们可以知道的是 `constructor` 是构造函数本身，那么此处的类型判断是没问题的。疑惑的是 `let options = Ctor.options` 关于 `Ctor.options` ，构造函数的 `options` 在 [`src/core/instance/index.ts`](#^ctor) 并没有写
+函数 `resolveConstructorOptions` 的开头就让人有些迷惑了吧，传入的参数是 `vm.constructor` 由 [[面向对象]] 这章我们可以知道的是 `constructor` 是构造函数本身，那么此处的类型判断是没问题的。疑惑的是 `let options = Ctor.options` 关于 `Ctor.options` ，构造函数的 `options` 在 [`src/core/instance/index.ts`](#^ctor) 并没有写
 其实在 [`web/runtime/index.ts`](#^ops1) 中有关 `options` 的内容，是给 `options` 添加了属性，并没用真正的定义。往上一层 [`src/core/index.ts`](#^initGlobalAPI) 找，并在函数 `initGlobalAPI` 中看到如下的实现：
 
 `src\core\global-api\index.ts`
@@ -804,7 +804,7 @@ get: function reactiveGetter() {
 }
 ```
 
-`dep.ts` 中的 `pushTarget()` 函数被调用才会进入这步，当页面首次渲染会去获取值，这时候就会调用 `pushTarget(this)` 见 [[#^watcherGet]]，这里的 this 为 beforeCreate 初始化的 Watcher，读取 `data` 中的变量的时候触发 `getter`，此时无 `__DEV__`，执行 `dep.Depend()`
+文件 `dep.ts` 中的 `pushTarget()` 函数被调用才会进入这步，当页面首次渲染会去获取值，这时候就会调用 `pushTarget(this)` 见 [[#^watcherGet]]，这里的 this 为 beforeCreate 初始化的 Watcher，读取 `data` 中的变量的时候触发 `getter`，此时无 `__DEV__`，执行 `dep.Depend()`
 
 返回时做了判断如果是 Ref，外面有一层包装，返回 `value.value` 否则返回 value
 
